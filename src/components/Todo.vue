@@ -31,7 +31,6 @@ export default {
     },
     methods: {
         toggleCheckbox(e) {
-            console.log('hello')
             this.$emit('toggle-checkbox', {
                 id: this.todo.id,
                 checked: e.target.checked

@@ -1,29 +1,42 @@
 <template>
   <div id="app" class="container"> <!--부트스트랩 클래스-->
     <h1 class="text-center">Todo App</h1>
-    <input 
+    <AddTodo @add-todo="addTodo" />
+    <!-- <input 
     v-model='todoText'
     type="text" 
     class="w-100 p-2" 
     placeholder="Type todo" 
-    @keyup.enter="addTodo" >
+    @keyup.enter="addTodo" > -->
     <hr>
+    <!--
     <Todo 
     v-for="todo in todos" 
     :key="todo.id" 
     :todo="todo"
     @toggle-checkbox="toggleCheckbox"
     @click-delete="deleteTodo"
-    /> <!--컴포넌트 하나를 key값에 따라 하나씩 넣어준다-->
+    />           컴포넌트 하나를 key값에 따라 하나씩 넣어준다-->
+    <TodoList 
+    :todos="todos"
+    @toggle-checkbox="toggleCheckbox"
+    @click-delete="deleteTodo"
+    /> <!--todos를 프롭스로 보내준다-->
+
+    <CompletedTodo :todos="todos"/>
   </div>
 </template>
 
 <script>
-import Todo from '@/components/Todo.vue';
+import TodoList from '@/components/TodoList.vue';
+import AddTodo from '@/components/AddTodo.vue';
+import CompletedTodo from '@/components/CompletedTodo.vue';
 
 export default {
   components: {
-    Todo
+    TodoList,
+    AddTodo,
+    CompletedTodo
   },
 
   data(){
@@ -44,10 +57,10 @@ export default {
       // this.todos[index].splice(index,1);
       this.todos = this.todos.filter(todo => todo.id !== id)
     },
-    addTodo(e) { // e.target.value 이것으 이벤트로 받은 값을 얻을 수 있다
+    addTodo(value) { // e.target.value 이것으 이벤트로 받은 값을 얻을 수 있다
       this.todos.push ({
         id: Math.random(),
-        text: e.target.value,
+        text: value,
         checked: false,
       });
       this.todoText = ''
